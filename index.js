@@ -16,7 +16,6 @@ import pg from "pg";
 
 env.config();
 const app = express();
-const app = express();
 app.set("trust proxy", 1); 
 const port = process.env.PORT || 3000;
 
