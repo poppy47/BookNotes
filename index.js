@@ -12,10 +12,10 @@ import env from "dotenv";
 import { SitemapStream, streamToPromise } from "sitemap";
 import compression from "compression";
 import pg from "pg";
-
+env.config();
 const app = express();
 const port = process.env.PORT || 3000;
-env.config();
+
 
 app.use(
     session({
