@@ -12,8 +12,12 @@ import env from "dotenv";
 import { SitemapStream, streamToPromise } from "sitemap";
 import compression from "compression";
 import pg from "pg";
+
+
 env.config();
 const app = express();
+const app = express();
+app.set("trust proxy", 1); 
 const port = process.env.PORT || 3000;
 
 
@@ -24,6 +28,7 @@ app.use(
         saveUninitialized: false,
     })
 );
+
 // Use DATABASE_URL (Render) if available, else fall back to individual vars (local)
 const db = new pg.Pool({
     user: process.env.PG_USER,
