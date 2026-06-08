@@ -19,12 +19,11 @@ const port = process.env.PORT || 3000;
 
 app.use(
     session({
-        secret: process.env.SESSION_SECRET,
+        secret: process.env.SESSION_SECRET || "fallback-secret-change-this",
         resave: false,
         saveUninitialized: false,
     })
 );
-
 // Use DATABASE_URL (Render) if available, else fall back to individual vars (local)
 const db = new pg.Pool({
     user: process.env.PG_USER,
