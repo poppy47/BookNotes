@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 import session from "express-session";
 import helmet from "helmet";
 import env from "dotenv";
+import https from "https"
 import { SitemapStream, streamToPromise } from "sitemap";
 import compression from "compression";
 import pg from "pg";
@@ -76,6 +77,14 @@ app.use(passport.session());
 
 app.use('/bootstrap-css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/bootstrap-js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
+
+setInterval(()=>{
+    https.get(process.env.APP_URL,(res) =>{
+        console.log(`self-ping:${res.statusCode}`); 
+    }).on("error", (err) =>{
+        console.log("self-ping error:", err.message);
+    });
+}, 10*60*1000) //every 10 minutes
 
 async function getBooks() {
     const result = await db.query("SELECT * FROM books");
