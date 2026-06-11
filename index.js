@@ -64,6 +64,8 @@ app.use(
                     "data:",
                     "https://covers.openlibrary.org",
                     "https://placehold.co",
+                    "https://books.google.com",           // ← add
+                    "https://books.googleusercontent.com", // ← add
                 ],
                 fontSrc: ["'self'"],
                 connectSrc: ["'self'"],
@@ -272,10 +274,6 @@ app.get("/admin/logout", (req, res, next) => {
 passport.use(
     "local",
     new Strategy(async function verify(username, password, cb) {
-        console.log("Input username:", username);
-        console.log("Expected ADMIN:", process.env.ADMIN);
-        console.log("Input password:", password);
-        console.log("Hash from env:", process.env.PASSWORD);
         
         if (username !== process.env.ADMIN) return cb(null, false);
         const isMatch = await bcrypt.compare(password, process.env.PASSWORD);
